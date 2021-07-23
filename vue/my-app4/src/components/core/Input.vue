@@ -1,13 +1,13 @@
 <template>    
-    <input class="form-control form-control-sm text-secondary" type="text"/>
+    <input class="form-control form-control text-secondary p-1" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :placeholder="placeholder"/>
 </template>
 
 <script>
 export default {
     name: "Input",
-    props: {
-    
-    }
+    props: ["placeholder","modelValue"],
+    emits:['update:modelValue'],
+
 }
 </script>
 
