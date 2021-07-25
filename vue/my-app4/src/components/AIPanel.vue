@@ -19,30 +19,38 @@
 <script>
 import NavBar from "./NavBar.vue";
 import OpenAI from "./OpenAI.vue";
-import options from "../openai.options.json";
+import axios from "axios";
+
 export default {
   components: { NavBar,OpenAI },
   data() {
       return {
-          options:options,
+          options : {},
           engine:"davinci",
           method:"completions"
       }      
   },
+  async created() {
+    const post = await axios.get("/api/openai");      
+    if(post.data) this.options = post.data;      
+  },
   setup() {
-    console.log(options);
+    
   },
   methods: {
-    doSomething(e) {    
+    doSomething(e) {
+        console.log(this.options);    
         if(e.target.attributes["menuid"])
-        {            
+        {
             const tokens = e.target.attributes["menuid"].value.split("-");            
             if(tokens[0] == "engine") this.engine = tokens[1];
             if(tokens[0] == "method") this.method = tokens[1];
-
         }
             
     },
+    fetchData() {      
+    
+    }
   },
 };
 </script>

@@ -35,16 +35,12 @@ export default {
     };
   },
   methods: {
-    sendRequest(prompt) {
-      let url = `https://api.openai.com/v1/engines/${this.engine}/${this.method}`;
-      console.log(url);
+    async sendRequest(prompt) {
       let req = {
-        url: url,
-        timeout: 8000,
+        url: `/api/openai/${this.engine}/${this.method}`,
+        timeout: 10000,
         responseType: "json",
-        headers: {
-          Authorization:
-            "Bearer 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",
+        headers: {          
           "Content-Type": "application/json",
         },
         data: {
@@ -59,7 +55,18 @@ export default {
         method: "post",
       };
       this.answer = "waiting...";
-      axios(req).catch(this.OnError).then(this.OnResponse);
+      const post = await axios(req);
+        if(post.data.choices)
+        {
+          console.log(post.data);
+          this.answer = post.data.choices[0].text;
+        }
+        else
+        {
+          console.log(post.data);
+          this.answer = post.data.msg;
+        }
+          
     },
         
     OnClick() {
