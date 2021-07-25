@@ -1,0 +1,4 @@
+{
+    "engines": ["ada","babbage","curie","davinci"],
+    "methods": ["completions","search","classifications","answers"]
+}
