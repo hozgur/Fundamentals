@@ -1,0 +1,16 @@
+{
+  "name": "addon-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build:dev": "node-gyp -j 16 build --debug --directory=./addon",
+    "build": "node-gyp -j 16 build",
+    "rebuild:dev": "./addon/node-gyp -j 16 rebuild --debug",
+    "rebuild": "./addon/node-gyp -j 16 rebuild",
+    "clean": "./addon/node-gyp clean"
+ },
+  "author": "",
+  "license": "ISC"
+}
