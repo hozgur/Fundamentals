@@ -1,0 +1,16 @@
+<template>
+    <c-card>
+        <c-row>
+            <c-card>
+                <h6>Catalogs</h6>
+                <c-listbox></c-listbox>
+            </c-card>
+            <c-card>
+                <h6>Colors</h6>    
+            </c-card>
+            <c-card>
+                <h6>Color</h6>    
+            </c-card>
+        </c-row>
+    </c-card>
+</template>

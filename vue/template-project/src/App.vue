@@ -1,12 +1,12 @@
 <template>
-  <AIPanel />
+  <ColorPanel />
 </template>
 
 <script>
 //import OpenAI from "./components/OpenAI.vue"
-import AIPanel from "./components/ColorPanel.vue";
+import ColorPanel from "./components/ColorPanel.vue";
 export default {
-  components: { AIPanel },
+  components: { ColorPanel },
   name: "App",
   data() {
     return {};
@@ -15,8 +15,7 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+#app {  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  
   color: #2c3e50;
@@ -26,7 +25,7 @@ export default {
 }
 
 html {
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 @include media-breakpoint-up(sm) {
