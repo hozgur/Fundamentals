@@ -4,13 +4,24 @@
 
 <main>
 	<div class="toolbar">
-		<select>
+		<select class="selectdiv">
 			<option value="">Mimaki Ts100-1</option>
 			<option value="">Mimaki Jv 300</option>
 			<option value="">File 2</option>
 			<option value="">File 3</option>
 		</select>
-		<button>Device</button>
+		<button>
+			<span class="material-icons">settings</span>
+		</button>
+		<div class="job-actions">
+			<button>
+				<span class="material-icons">save</span>
+			</button>
+			<button>
+				<span class="material-icons">delete</span>
+			</button>
+		</div>
+
 	</div>
 
 	<div class="content">
@@ -25,33 +36,76 @@
 </main>
 
 <style>
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;  
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}	
+	.selectdiv {
+		background-color: #404040;
+		border-radius: 3px;
+		color: #fff;
+		box-sizing: content-box;
+		-webkit-appearance: none;
+		padding: 0.5em;
+	}
+
+	.selectdiv:after {
+		font-family: "Material Icons";
+    	content: "\e5cf";
+	}
+	.toolbar {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;		
+	}
+	.toolbar button {
+		margin-left: 5px;
+		background-color: #404040;
+		color: #fff;
+		border-radius: 3px;		
+	}
+
+	.job-actions {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;	
+	}
+
+	.job-actions button {
+		margin-left: 5px;
+		background-color: #404060;
+		color: #fff;
+		border-radius: 3px;		
+	}
+
 	.jobs {
 		list-style: none;
 		padding: 0;
 		margin: 0;
 	}
 
-	.job-status-icon {
-		background-image: url(../../assets/images/job-status-icon.svg);
-	}
-	.job-status-icon.running {
-		background-image: url(../../assets/images/job-status-icon-running.svg);
-	}
-	.job-status-icon.paused {
-		background-image: url(../../assets/images/job-status-icon-paused.svg);
-	}
-	.job-status-icon.canceled {
-		background-image: url(../../assets/images/job-status-icon-canceled.svg);
-	}
-	.job-status-icon.failed {
-		background-image: url(../../assets/images/job-status-icon-failed.svg);
-	}
-	.job-status-icon.completed {
-		background-image: url(../../assets/images/job-status-icon-completed.svg);
-	}
-	.job-status-icon.unknown {
-		background-image: url(../../assets/images/job-status-icon-unknown.svg);
-	}
 	.job-info {
 		display: flex;
 		flex-direction: column;
@@ -101,22 +155,8 @@
 	.job-progress-text span {
 		margin-left: 0.5rem;
 	}
-	.job-actions {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-top: 0.5rem;
-	}
-	.job-actions button {
-		font-size: 1rem;
-		font-weight: 500;
-		color: #000;
-		padding: 0.5rem 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #e6e6e6;
-		background-color: #fff;
-		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-	}
+	
+	
 	.job-actions button:first-child {
 		margin-right: 0.5rem;
 	}
@@ -148,20 +188,7 @@
 		background-color: #404040;
 	}
 
-	button {
-		background-color: #404040;
-		color: #fff;
-		border-radius: 3px;
-		padding: 0.5em;
-	}
-	select {
-		background-color: #404040;
-		border-radius: 3px;
-		color: #fff;
-		box-sizing: content-box;
-		-webkit-appearance: none;
-		padding: 0.5em;
-	}
+	
 
 	h1 {
 		color: #ff3e00;
