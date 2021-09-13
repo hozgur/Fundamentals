@@ -1,0 +1,28 @@
+{
+    "jobs": [
+        {
+            "name": "Job 1",
+            "device": "device 1",
+            "progress": 0,
+            "status": ""
+        },
+        {
+            "name": "Job 2",
+            "device": "device 2",
+            "progress": 0,
+            "status": ""
+        },
+        {
+            "name": "Job 3",
+            "device": "device 3",
+            "progress": 0,
+            "status": ""
+        },
+        {
+            "name": "Job 4",
+            "device": "device 4",
+            "progress": 0,
+            "status": ""
+        }
+    ]
+}
