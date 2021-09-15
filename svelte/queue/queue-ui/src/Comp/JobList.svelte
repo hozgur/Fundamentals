@@ -3,12 +3,8 @@
     import { writable, derived } from 'svelte/store';
     // console.log("fetch data");
     const apiData = writable([]);
-    // fetch("/api/jobs")
-    //     .then((response) => response.json())
-    //     .then((job) => {
-    //         console.log("job =", job);
-    //         joblist = job;
-    //     });
+   
+    let selected = false;
 
     onMount(async () => {
         fetch(
@@ -28,9 +24,14 @@
 <div class="job-list">
     <ul>
         {#each $apiData as job}
-            <li>
+            <li on:click="{(ev) => 
+            {
+                console.log(ev.target);
+                console.log("clicked");
+                }}">
                 <div style="width: 40%;"> list item {job.name} </div>
-                <div style="width: 40%;"> list item {job.device} </div>                
+                <div style="width: 40%;"> list item {job.device} </div>
+                <div style="width: 20%;"> list item {job.device} </div>                
             </li>
         {/each}
     </ul>

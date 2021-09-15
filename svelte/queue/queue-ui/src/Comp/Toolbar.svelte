@@ -1,12 +1,14 @@
 <div class="toolbar">
     <div class="toolbar-left">
-        <button class="toolbar-item">
-            <select class="device-select" name="filter-status">
-                <option value="all" selected="selected">All</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-            </select>            
+        <button class="device-select toolbar-item">
+            Select
+            <ul>
+                <li>All</li>
+                <li>Active</li>
+                <li>Completed</li>
+            </ul>
         </button>
+
         <button class="toolbar-item">
             <span class="material-icons"> settings </span></button
         >
