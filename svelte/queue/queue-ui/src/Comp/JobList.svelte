@@ -26,9 +26,6 @@
 </script>
 
 <div class="job-list">
-    <div class="job-list-header">
-        <h1>Job List</h1>
-    </div>
     <ul>
         {#each $apiData as job}
             <li>list item {job.name} x {job.device}</li>
