@@ -28,7 +28,10 @@
 <div class="job-list">
     <ul>
         {#each $apiData as job}
-            <li>list item {job.name} x {job.device}</li>
+            <li>
+                <div style="width: 40%;"> list item {job.name} </div>
+                <div style="width: 40%;"> list item {job.device} </div>                
+            </li>
         {/each}
     </ul>
 </div>
