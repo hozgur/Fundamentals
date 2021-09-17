@@ -1,0 +1,16 @@
+{
+  "name": "image-quantization",
+  "version": "1.0.0",
+  "description": "",
+  "main": "basic.js",
+  "scripts": {
+    "start": "node basic.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "image-q": "^3.0.4",
+    "pngjs": "^6.0.0"
+  }
+}
