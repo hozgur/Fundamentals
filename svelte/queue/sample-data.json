@@ -23,6 +23,12 @@
             "device": "device 4",
             "progress": 0,
             "status": ""
+        },
+        {
+            "name": "Job 5",
+            "device": "device 5",
+            "progress": 0,
+            "status": ""
         }
     ]
 }
