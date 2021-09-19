@@ -1,76 +1,51 @@
+/*
+from : https://www.w3schools.com/js/js_async.asp
+
+"async and await make promises easier to write"
+
+async makes a function return a Promise
+
+await makes a function wait for a Promise
+
+*/
 const axios = require('axios');
 
-async function sendOpenAIRequest(prompt) {
-  let req = {
-    url: `https://api.openai.com/v1/engines/davinci/completions`,
-    timeout: 9000,
-    responseType: "json",
-    headers: {
-      Authorization:
-        "Bearer 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",
-      "Content-Type": "application/json",
-    },
-    data: {
-      prompt: prompt,
-      temperature: 0.7,
-      max_tokens: 30,
-      top_p: 1,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.6,
-      stop: ["\n"],
-    },
-    method: "post",
-  };
-  const post = await axios(req);
-  console.log(post.body);
-}
 
 async function sendRURequest() {
-  try {
-    const post = await axios("https://randomuser.me/api/");
-    let name = post.data.results[0].name;
-    console.log(name);
-    return name;
+    try {
+      console.log("wait for me!");
+      const post = await axios("https://randomuser.me/api/");
+      let name = post.data.results[0].name;
+      console.log("log from after promise :",name);
 
-  } catch (error) {
-    console.log("error:", error);
-    return "error";
-  }
-}
+      // for test exception mechanism, uncomment below 2 lines
+      //console.log("now sending exception.");
+      //throw new Error("Test Error");
 
-function send() {
-  let prompt = "Adamin biri helva yemiş.";
-  sendRURequest().then((value) => {
-    console.log(name);
-  });
-  console.log("After");
-};
-
-//send();
-
-//try unfold
-
-let data1 = {
-  prompt: "test",
-  temp: 12,
-  responseLength: 13
-};
-
-
-function unfoldfunc(val) {
-
-  console.log(val);
-  let data2 = {
-    val,
-    top_p: 1,
-    frequency_penalty: 0.0,
-    presence_penalty: 0.6,
-    stop: ["\n"], 
-  }
-
+      return name;
   
-  console.log(data2);
-};
+    } catch (error) {
+      console.log("error on catch close:", error);
+      return "this is error string returning on catch close";
+    }
+  }
+  
+  function send() {
+    console.log("send");
+    sendRURequest().then((value) => {
+      console.log("return value from promise : (on then function) ",value);
+    });
+  };
 
-console.log("test");
-unfoldfunc(...data1);
+console.log("Before");
+send();
+console.log("After");
+let count = 0;
+let interval = setInterval(() => {
+  console.log(`waiting for result from send for ${count++} seconds.`);
+  if(count > 10) {
+    console.log("that's enough for waiting.. I'm timeout")
+    clearInterval(interval);
+  }
+}, 1000);
+
