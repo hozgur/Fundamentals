@@ -2,13 +2,27 @@
     display: grid;
     grid-template-columns:repeat(4, 1fr);
     grid-template-rows: repeat(8,1fr);    
-    width: 100%;
+    width: 800px;
     max-width: 960px;
-    height: 100%;
+    height: 600px;
     max-height: 800px;
     margin: 0 auto;
     background-color: #444;
+}
+
+button {
     border: 1px solid #444;
+    border-radius: 5px;
+    box-shadow: 0 0 20px #444;
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    transition: color .1s ease-in 100ms;
+    color:#444;
+
+}
+
+button:hover {
+    transform: translateY(-10px);
+    color:#fff;
 }
 
 .cell {
