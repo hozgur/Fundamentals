@@ -1,63 +1,91 @@
-const jsyaml = require("js-yaml");
-html_elements = ["div","ul","li","p","a"];
+import {load} from './node_modules/js-yaml/dist/js-yaml.mjs';
+
+import {element_start,element_end} from './elements.js';
+
+export function parse(layout_string){
+    let layout = load(layout_string);
+    return _parse(layout);
+}
 
 
-function parse(element) {
-    let result = "";
-    const type = typeof element;
-    if (type != "object") {
-        result = element;
-    } else if (typeof element === "object") {
-        if(Array.isArray(element)){
-            for(let i=0;i<element.length;i++){
-                result += parse(element[i]);
+function setStart(element,props){
+    let tag = "";
+    if(element_start.hasOwnProperty(element)){
+        tag = element_start[element];
+        tag += _parse(props);
+        console.log("tag2 : ",tag);
+    }
+    else {
+        if(element == "input"){
+            tag = "<input ";
+            if(props){
+                let p = props.split(" ");
+                if(p.length > 0){
+                    tag+= "id='"+p[0]+"' ";
+                }
+                if(p.length > 1){
+                    tag += "type='"+p[1]+"' ";
+                }
+                if(p.length > 2){
+                    tag += "value='"+p[2]+"' ";
+                }
+                tag += ">";
             }
-        } else {
-        for(let key in element) {
-            result += "<" + key + ">";
-            result += parse(element[key]);
-            result += "</" + key + ">";
+        }
+        else
+        if(element == "label"){
+            tag = "<label ";
+            if(props){
+                let p = props.split(" ");                
+                if(p.length > 1){
+                    tag += "class='"+p[1]+"' ";
+                }                
+                tag += ">";
+                if(p.length > 0){
+                    tag+= p[0];
+                }
+            }
+        }
+        else {
+            tag = "<" + element + ">";
+            tag += _parse(props);
+            console.log("tag : ",tag);
         }
     }
+    return tag;
+}
+
+
+function setEnd(element){
+    let tag = "";
+    if(element_end.hasOwnProperty(element)){
+        tag = element_end[element];        
     }
+    else {
+        if(element == "input"){
+        }
+        else {
+            tag = "</" + element + ">";
+        }
+    }
+    return tag;
+}
+
+
+
+function _parse(layout) {    
+    let result = "";
+    if (typeof layout != "object") {
+        return layout;
+    } 
+    if(Array.isArray(layout)){        
+        for(let i=0;i<layout.length;i++) {
+            result += _parse(layout[i]);
+        }} else {
+        for(let key in layout) {            
+            result += setStart(key,layout[key]);
+            result += setEnd(key);
+        }
+    }    
     return result;
 }
-function sample_layout() {
-    return `
-    row:
-        panel:
-            - row:
-                label: Name m6
-                input: 3.14
-            - row:
-                label: Surname
-                input: 43
-    `
-}
-
-function sample_layout2() {
-    return `
-    row:
-         person: ahmet
-         panel:
-            - row:
-                label: Name
-                input: 3.14
-            - row:
-                label: Surname
-                input: 43
-    `
-}
-
-const doc = jsyaml.load(sample_layout());
-
-function test(){
-    console.log("test");
-    console.log(doc);
-    let result = parse(doc);
-    console.log(result);
-}
-module.exports = {
-    parse,
-    test
-};
