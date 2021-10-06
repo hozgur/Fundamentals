@@ -4,7 +4,7 @@ const fs = require('fs');
 
 
 
-fs.createReadStream("file.png")
+fs.createReadStream("girl.png")
     .pipe(
         new PNG({
             filterType: 4,
@@ -19,7 +19,7 @@ fs.createReadStream("file.png")
 
         // convert
         const palette = iq.buildPaletteSync([inPointContainer], {
-            colors: 128
+            colors: 6
         });        
         const outPointContainer = iq.applyPaletteSync(inPointContainer, palette);
 
@@ -30,7 +30,7 @@ fs.createReadStream("file.png")
             filterType: 4,
         });
         png.data = image_data;
-        png.pack().pipe(fs.createWriteStream("file2.png"));
+        png.pack().pipe(fs.createWriteStream("file3-16renk.png"));
 
         
     });
