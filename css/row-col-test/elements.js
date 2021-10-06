@@ -1,14 +1,17 @@
 
-export let element_start = {
+export let elements = {
     // The elements
-    'row':      "<div class='row'>",
-    'col':      "<div class='col'>",
-    'panel':    "<div class='panel'>",
-};
-
-export let element_end = {
-    // The elements
-    'row':      "</div>",
-    'col':      "</div>",
-    'panel':    "</div>",
+    'row':      {
+        'start_tag': "<div class='row'>",
+        'end_tag':   "</div>"
+    },
+    'col':{
+        'start_tag': "<div class='col'>",
+        'end_tag':   "</div>"
+    },
+    'panel': {
+        'start_tag': "<div class='panel'>",
+        'end_tag':   "</div>"
+    }    
+    
 };

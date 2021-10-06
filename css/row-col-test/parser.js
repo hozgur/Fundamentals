@@ -1,6 +1,6 @@
 import {load} from './node_modules/js-yaml/dist/js-yaml.mjs';
 
-import {element_start,element_end} from './elements.js';
+import {elements} from './elements.js';
 
 export function parse(layout_string){
     let layout = load(layout_string);
@@ -10,8 +10,8 @@ export function parse(layout_string){
 
 function setStart(element,props){
     let tag = "";
-    if(element_start.hasOwnProperty(element)){
-        tag = element_start[element];
+    if(elements.hasOwnProperty(element)){
+        tag = elements[element].start_tag;
         tag += _parse(props);
         console.log("tag2 : ",tag);
     }
@@ -58,8 +58,8 @@ function setStart(element,props){
 
 function setEnd(element){
     let tag = "";
-    if(element_end.hasOwnProperty(element)){
-        tag = element_end[element];        
+    if(elements.hasOwnProperty(element)){
+        tag = elements[element].end_tag;
     }
     else {
         if(element == "input"){
