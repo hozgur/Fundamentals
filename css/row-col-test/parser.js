@@ -4,6 +4,7 @@ import {elements} from './elements.js';
 
 export function parse(layout_string){
     let layout = load(layout_string);
+    console.log("layout : ",layout);
     return _parse(layout);
 }
 
@@ -16,23 +17,7 @@ function setStart(element,props){
         console.log("tag2 : ",tag);
     }
     else {
-        if(element == "input"){
-            tag = "<input ";
-            if(props){
-                let p = props.split(" ");
-                if(p.length > 0){
-                    tag+= "id='"+p[0]+"' ";
-                }
-                if(p.length > 1){
-                    tag += "type='"+p[1]+"' ";
-                }
-                if(p.length > 2){
-                    tag += "value='"+p[2]+"' ";
-                }
-                tag += ">";
-            }
-        }
-        else
+        
         if(element == "label"){
             tag = "<label ";
             if(props){
@@ -47,8 +32,8 @@ function setStart(element,props){
             }
         }
         else {
-            tag = "<" + element + ">";
-            tag += _parse(props);
+            tag = "<" + element +" ";
+            tag += _parse(props) + ">";
             console.log("tag : ",tag);
         }
     }

@@ -12,6 +12,7 @@ export let elements = {
     'panel': {
         'start_tag': "<div class='panel'>",
         'end_tag':   "</div>"
-    }    
+    }
+      
     
 };

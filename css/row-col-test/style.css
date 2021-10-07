@@ -56,5 +56,10 @@ label {
     margin: 2px;
     border: 1px solid #444;
     background-color: #fff;
+    transition: background-color 0.8s ease-in-out;
+}
+
+.panel:hover {
+    background-color: #106ac4;
 }
  
