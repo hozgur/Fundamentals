@@ -96,7 +96,7 @@ function process3(tree) {
         }
         if(classes)
             html+= ` class="${classes}"`;
-        html+= ">" + innerHTML;;
+        html+= ">" + innerHTML;
     }    
     for(const child of tree.children) {
         html+= process3(child);
@@ -112,8 +112,6 @@ function process3(tree) {
     return html;
 }
 
-    
-
 
 let list = process1(sample);
 console.log(list);
@@ -123,14 +121,37 @@ let html = process3(tree);
 console.log(html);
 
 
-function parse(layout) {
+function parse(layout,app) {
     let list = process1(layout);
 
     let tree = process2(list);
 
     let html = process3(tree);
 
-    return html;
+    let app_element = document.getElementById(app);
+    if(app_element) {
+        app_element.innerHTML = html;
+    } else {
+        console.log(`app element ${app} not found`);
+    }
 }
 
-export { parse };
+class mapp {
+    init(layout,appid) {
+        this.layout = layout;
+        this.appid = appid;
+        this.render();
+    }
+    test() {
+        console.log("test");
+    }
+    render() {
+        parse(this.layout,this.appid);
+    }
+}
+
+var app = new mapp();
+
+if(window)
+    window.app = app;
+export { app };
