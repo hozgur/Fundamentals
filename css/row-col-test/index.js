@@ -1,17 +1,46 @@
-import { parse } from './parser.js';
+import { parse } from './preprocess.js';
 
 
 function main() {
     return `
-    # Deneme
-panel:
-    - row:
-      panel:
-        - label: "Deneme"
-        - label: "Deneme2"
-    - row:
-        panel:
-            label: "Deneme"
+    row
+        panel
+            row
+                label Hello World m6
+                input id=name
+                button Click_me m6
+            row
+                label Hello World m6
+                input id=name
+                button Click_me m6
+        panel
+            row
+                label Hello World m6
+                input id=name
+                button Click_me m6
+            row
+                label Hello World m6
+                input id=name
+                button Click_me m6
+    row
+                panel
+                    row
+                        label Hello World m6
+                        input id=name
+                        button Click_me m6
+                    row
+                        label Hello World m6
+                        input id=name
+                        button Click_me m6
+                panel
+                    row
+                        label Hello World m6
+                        input id=name
+                        button Click_me m6
+                    row
+                        label Hello World m6
+                        input id=name
+                        button Click_me m6
   `;
 }
 
