@@ -6,12 +6,15 @@ const layout = `
         row
             panel
                 list m10
-                    list-item 
-                        a Deneme1 href=#1 id=list-1
-                    list-item 
-                        a Seçenek_2 href=#2 id=list-2
-                    list-item 
-                        a Seçenek_3 href=#3 id=list-3
+                    list-item id=list-1
+                        a Deneme1 href=#1
+                        i class=fas+fa-angle-right+p2
+                    list-item id=list-2
+                        a Seçenek_2 href=#2 
+                        i class=fas+fa-angle-right+p2
+                    list-item id=list-3
+                        a Seçenek_3 href=#3 
+                        i class=fas+fa-angle-right+p2
                 p id=list-footer
             panel
                 row

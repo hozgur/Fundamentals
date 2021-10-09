@@ -78,7 +78,7 @@ label {
     padding: 2px;
     margin: 2px;
     border: 1px solid #444;
-    background-color: #fff;
+    background-color: white;
     transition: background-color 0.8s ease-in-out;
 }
 
@@ -109,22 +109,27 @@ button {
 }
 
 .list-group-item {
-    width: 100%;    
-}
-
-.list-group-item a {
+    display: flex;
+    justify-content: space-between;
     padding: 0;
     margin: 0;
     border-bottom: gray 1px solid;
-    width: 100%;    
+    width: 100%;
+    transition: all 300ms ease-out;
+}
+
+.list-group-item a {
+       
 }
 .list-group-item:hover {
-    background-color: #eee;
+    display: flex;
+    flex-direction: row;
+    background-color: #ccc;
 }
 
 
 
-.list-group-item a.selected {
+.list-group-item.selected {
     background-color: #eee;
     border: 1px solid #444;
 }
