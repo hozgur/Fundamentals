@@ -16,7 +16,8 @@ function process1(layout) {
     const lines = layout.split('\n');
     const list = [];
     for(const rawline of lines) {
-        const line = rawline.split('#')[0];
+        //const line = rawline.split('#')[0];
+        const line = rawline;
         if(line.trim() == '') continue;
         const space = spaces(line);
         const attributes = line.trim().split(' ');
@@ -77,7 +78,7 @@ function process3(tree) {
                 const [key,value] = prop.split('=');
                 if(value) {
                     if(key == 'class')
-                        classes += value;
+                        classes += " " + value.replace(/\+/g, ' ');
                     else
                         html+= ` ${key}="${value}"`;
                 }
@@ -85,7 +86,7 @@ function process3(tree) {
                     if(key.startsWith('m'))
                         classes += ` ${key}`;
                     else
-                        innerHTML += `${key.replace("_"," ")}`;
+                        innerHTML += `${key.replace(/_/g," ")}`;
                 }
             }
         }
@@ -135,18 +136,36 @@ export class dialog {
             console.log(`app element ${elementId} not found`);
         }
     }
-    setVal(elementId,value) {
-        const element = document.getElementById(elementId);
-        if(element) {
-            element.setAttribute("value",value);
-        } else {
-            console.log(`element ${elementId} not found`);
+    set(values) {
+        for(const [key,value] of Object.entries(values)) {
+            const element = document.getElementById(key);
+            if(element) {
+                element.value = value;
+            }
         }
+    }
+    get(values) {
+        let result = {};
+        for(const [key,value] of Object.entries(values)) {
+            const element = document.getElementById(key);
+            if(element) {
+                result[key] = element.value;
+            }
+        }
+        return result;
     }
     setContent(elementId,content) {
         const element = document.getElementById(elementId);
         if(element) {
             element.innerHTML = content;
+        } else {
+            console.log(`element ${elementId} not found`);
+        }
+    }
+    classList(elementId) {
+        const element = document.getElementById(elementId);
+        if(element) {
+            return element.classList;
         } else {
             console.log(`element ${elementId} not found`);
         }
