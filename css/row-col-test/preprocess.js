@@ -2,19 +2,6 @@
 
 import { elements } from "./elements.js";
 
-
-
-const sample = `
-row   # person row
-    label Hello
-    input id=name
-row
-    label Age
-    input id=age
-button id=submit OK
-    
-`;
-
 function spaces(text) {    
     for(let i = 0; i < text.length; i++)
         if(text[i] != ' ')
@@ -22,7 +9,9 @@ function spaces(text) {
     return 0;
 }
 
-
+// *****************************************************************************************************
+// process1
+// Get string and return list of lines and spaces
 function process1(layout) {
     const lines = layout.split('\n');
     const list = [];
@@ -40,6 +29,9 @@ function process1(layout) {
     return list;
 }
 
+// *****************************************************************************************************
+// process2
+// Get list of lines and return tree
 function process2(list) {
     const root = {space: -1, parent:null, children: []};
     let last_node = root;
@@ -64,6 +56,9 @@ function process2(list) {
     return root;
 }
 
+// *****************************************************************************************************
+// process3
+// Get tree and return html
 function process3(tree) {
     let html = "";
     let classes ="";
@@ -112,46 +107,51 @@ function process3(tree) {
     return html;
 }
 
-
-let list = process1(sample);
-console.log(list);
-let tree = process2(list);
-console.log(tree);
-let html = process3(tree);
-console.log(html);
-
-
-function parse(layout,app) {
+function parse(layout) {
     let list = process1(layout);
 
     let tree = process2(list);
 
     let html = process3(tree);
 
-    let app_element = document.getElementById(app);
-    if(app_element) {
-        app_element.innerHTML = html;
-    } else {
-        console.log(`app element ${app} not found`);
-    }
+    return html;
 }
 
-class mapp {
+export class dialog {
     init(layout,appid) {
         this.layout = layout;
         this.appid = appid;
-        this.render();
+        this.render(appid);
     }
     test() {
         console.log("test");
     }
-    render() {
-        parse(this.layout,this.appid);
+    render(elementId) {
+        let app_element = document.getElementById(elementId);
+        const html = parse(this.layout);
+        if(app_element) {
+            app_element.innerHTML = html;
+        } else {
+            console.log(`app element ${elementId} not found`);
+        }
+    }
+    setVal(elementId,value) {
+        const element = document.getElementById(elementId);
+        if(element) {
+            element.setAttribute("value",value);
+        } else {
+            console.log(`element ${elementId} not found`);
+        }
+    }
+    setContent(elementId,content) {
+        const element = document.getElementById(elementId);
+        if(element) {
+            element.innerHTML = content;
+        } else {
+            console.log(`element ${elementId} not found`);
+        }
     }
 }
 
-var app = new mapp();
 
-if(window)
-    window.app = app;
-export { app };
+export { parse };

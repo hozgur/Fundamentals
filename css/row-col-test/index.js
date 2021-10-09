@@ -1,4 +1,4 @@
-import { app } from './preprocess.js';
+import { dialog } from './preprocess.js';
 
 
 const layout = `
@@ -14,8 +14,11 @@ const layout = `
     button id=try_me Try_Me onClick=app.test2()
   `;
 
+const app = new dialog();
+window.app = app;
 app.test2 = function() {
-    alert("Hello World!");
+    app.setVal("name", "John");
+    app.setContent("try_me", "Ok!");
 };
 
 

@@ -15,4 +15,6 @@ function getDoubleQuoteSections(str) {
 
   let sample = 'gugu="This is a test" as="this is a test"';
 
+const count = (sample.match(/"/g) || []).length;
+console.log(count);
   console.log(getDoubleQuoteSections(sample));
