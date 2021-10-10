@@ -79,7 +79,7 @@ label {
     margin: 2px;
     border: 1px solid #444;
     background-color: white;
-    transition: background-color 0.8s ease-in-out;
+    transition: all 300ms ease-out;
 }
 
 .panel:hover {
@@ -113,13 +113,15 @@ button {
     justify-content: space-between;
     padding: 0;
     margin: 0;
-    border-bottom: gray 1px solid;
     width: 100%;
     transition: all 300ms ease-out;
+    cursor: pointer;
 }
 
-.list-group-item a {
-       
+.list-group-item p {
+    margin: 0;
+    padding: 0;
+    height: 1rem;
 }
 .list-group-item:hover {
     display: flex;

@@ -4,16 +4,16 @@ import { dialog } from './preprocess.js';
 const layout = `
     panel
         row
-            panel
+            panel id=left
                 list m10
                     list-item id=list-1
-                        a Deneme1 href=#1
+                        p Hello
                         i class=fas+fa-angle-right+p2
                     list-item id=list-2
-                        a Seçenek_2 href=#2 
+                        p Seçenek_2 
                         i class=fas+fa-angle-right+p2
                     list-item id=list-3
-                        a Seçenek_3 href=#3 
+                        p Seçenek_3 
                         i class=fas+fa-angle-right+p2
                 p id=list-footer
             panel
@@ -80,10 +80,9 @@ app.toggle = function() {
     app.classList("left").toggle("rotate");
 };
 
-app.select = function(event) {
-    console.log(event.target.id);
-    app.setContent("list-footer", "Seçilen: " + event.target.id);
-    app.classList(event.target.id).toggle("selected");
+app.select = function(event,id) {
+    app.setContent("list-footer", "Seçilen: " + id);
+    app.classList(id).toggle("selected");
 };
 
 window.onload = function () {
