@@ -5,7 +5,7 @@ const layout = `
     panel
         row
             panel id=left
-                list m10
+                list m12
                     list-item id=list-1
                         p Hello
                         i class=fas+fa-angle-right+p2

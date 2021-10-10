@@ -34,7 +34,7 @@ function process1(layout) {
 // process2
 // Get list of lines and return tree
 function process2(list) {
-    const root = {space: -1, parent:null, children: []};
+    const root = {space: -1, name:'dialog', parent:null, children: []};
     let last_node = root;
     for(const node of list) {
         if(node.space == last_node.space) {
