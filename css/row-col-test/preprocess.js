@@ -138,11 +138,13 @@ export class dialog {
     }
     set(values) {
         for(const [key,value] of Object.entries(values)) {
+            
             const element = document.getElementById(key);
             if(element) {
                 if(Array.isArray(value)) {
                     if(element.children.length>0) {
                         let template = element.children[0];
+                        element.innerHTML = "";
                         let id= key;
                         if(template.hasAttribute('id'))
                             id = template.getAttribute('id');

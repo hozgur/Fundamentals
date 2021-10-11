@@ -7,8 +7,10 @@ const layout = `
             panel id=left
                 list id=mylist m12
                     list-item
-                        p id=name Hello
-                        i id=icon class=fas+fa-angle-right+p2                    
+                        row
+                            p id=name Hello m4
+                            p id=surname deneme m4
+                            i id=icon class=fas+fa-angle-right+p2                    
                 p id=list-footer
             panel
                 row
@@ -40,6 +42,9 @@ const layout = `
             i class=fas+fa-arrow-up
         button id=down
             i class=fas+fa-arrow-down
+    row id=footer
+        p id=footer_text
+        p id=footer_text2
   `;
 
 const app = new dialog();
@@ -74,13 +79,14 @@ app.array_test = function() {
     app.set({
         mylist: [
             {
-                "list-1": "Seçenek_1"                
+                name: "John",
+                surname: "Doe",
+                age: "25"
             },
             {
-                "list-2": "Seçenek_2"
-            },
-            {
-                "list-3": "Seçenek_3"
+                name: "Jane",
+                surname: "Doe",
+                age: "26"
             }
         ]
     });       
