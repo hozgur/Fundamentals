@@ -5,16 +5,10 @@ const layout = `
     panel
         row
             panel id=left
-                list m12
-                    list-item id=list-1
-                        p Hello
-                        i class=fas+fa-angle-right+p2
-                    list-item id=list-2
-                        p Seçenek_2 
-                        i class=fas+fa-angle-right+p2
-                    list-item id=list-3
-                        p Seçenek_3 
-                        i class=fas+fa-angle-right+p2
+                list id=mylist m12
+                    list-item
+                        p id=name Hello
+                        i id=icon class=fas+fa-angle-right+p2                    
                 p id=list-footer
             panel
                 row
@@ -36,7 +30,7 @@ const layout = `
             i class=fas+fa-check+p2
         button id=clear Clear onClick=app.clear()
             i class=fas+fa-trash+p2
-        button id=open toggle onClick=app.toggle()
+        button id=open Set_Array onClick=app.array_test()
     row class=border
         button id=left
             i class=fas+fa-arrow-left
@@ -76,8 +70,20 @@ app.increase = function(dx) {
     });
 };
 
-app.toggle = function() {
-    app.classList("left").toggle("rotate");
+app.array_test = function() {
+    app.set({
+        mylist: [
+            {
+                "list-1": "Seçenek_1"                
+            },
+            {
+                "list-2": "Seçenek_2"
+            },
+            {
+                "list-3": "Seçenek_3"
+            }
+        ]
+    });       
 };
 
 app.select = function(event,id) {

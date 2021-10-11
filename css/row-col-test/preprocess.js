@@ -140,7 +140,32 @@ export class dialog {
         for(const [key,value] of Object.entries(values)) {
             const element = document.getElementById(key);
             if(element) {
-                element.value = value;
+                if(Array.isArray(value)) {
+                    if(element.children.length>0) {
+                        let template = element.children[0];
+                        let id= key;
+                        if(template.hasAttribute('id'))
+                            id = template.getAttribute('id');
+                        for(let i = 0; i < value.length; i++) {
+                            let clone = template.cloneNode(true);
+                            if(value[i].hasOwnProperty('id') && value[i].id)
+                                clone.setAttribute('id',value[i].id);
+                            else
+                                clone.setAttribute('id', id+'_'+i);
+                            element.appendChild(clone);
+                            this.set(value[i]);
+                        }
+                    }
+                }
+                else if(typeof value == 'object') {
+                    this.set(value);
+                }
+                else {                
+                if(element.hasAttribute('value'))
+                    element.value = value;
+                else
+                    element.innerHTML = value;
+                }
             }
         }
     }
