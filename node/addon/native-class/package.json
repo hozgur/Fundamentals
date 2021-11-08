@@ -1,0 +1,19 @@
+{
+  "name": "native-class",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "configure": "node-gyp configure",
+    "build": "node-gyp build",
+    "install": "node-gyp rebuild"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^4.2.0"
+  }
+}
