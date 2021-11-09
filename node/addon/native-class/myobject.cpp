@@ -19,6 +19,7 @@ Napi::Object MyObject::Init(Napi::Env env, Napi::Object exports) {
 
 MyObject::MyObject(const Napi::CallbackInfo& info)
     : Napi::ObjectWrap<MyObject>(info) {
+      log("Created.");
   Napi::Env env = info.Env();
 
   int length = info.Length();
@@ -30,6 +31,10 @@ MyObject::MyObject(const Napi::CallbackInfo& info)
 
   Napi::Number value = info[0].As<Napi::Number>();
   this->value_ = value.DoubleValue();
+}
+
+MyObject::~MyObject() {
+  log("Destroyed.");
 }
 
 Napi::Value MyObject::GetValue(const Napi::CallbackInfo& info) {

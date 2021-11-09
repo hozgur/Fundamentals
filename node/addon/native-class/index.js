@@ -1,4 +1,4 @@
-var addon = require('bindings')('addon');
+var addon = require('bindings')('class_test');
 
 var obj = new addon.MyObject(10);
 console.log( obj.plusOne() ); // 11

@@ -2,7 +2,7 @@
 {
     'targets': [
         {
-        'target_name': 'class-test',
+        'target_name': 'class_test',
         'sources': [ 
             'main.cpp',
             'myobject.cpp',
