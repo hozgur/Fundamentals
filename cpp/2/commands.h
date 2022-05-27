@@ -161,6 +161,14 @@ class Core {
             case NOP:
                 pc++;
                 break;
+            default:
+                status |= INVALID_OPCODE;
+                log("Invalid opcode: %d\n", cmd >> 24);
+                break;
+        }
+        if((pc >= prg_memory_size) || (pc < 0)) {
+            status |= INVALID_MEMORY_ACCESS;
+            log("Program ended.\n");
         }
     }
 
