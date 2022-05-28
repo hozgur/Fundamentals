@@ -1,4 +1,4 @@
-enum CMDS{SETL,SETH,CALL,RET,DEC,MOV,JMP,JZ,JNZ,ADD,SUB,MUL,DIV,MOD,PRN,HLT,NOP};
+enum CMDS{SETL,SETH,CALL,RET,INC,DEC,MOV,JMP,JZ,JNZ,ADD,SUB,MUL,DIV,MOD,AND,OR,XOR,SHL,SHR,PUSH,POP,CMP,PRN,END,NOP};
 
 #define STACK_OVERFLOW 1
 #define STACK_UNDERFLOW 2
@@ -10,12 +10,9 @@ enum CMDS{SETL,SETH,CALL,RET,DEC,MOV,JMP,JZ,JNZ,ADD,SUB,MUL,DIV,MOD,PRN,HLT,NOP}
 namespace tool {
     int set(int cmd) {
         return cmd << 24;
-    }
-    int set(int cmd,int reg) {
-        return cmd << 24 | reg;
-    }
+    }    
     int set(int cmd,int reg,int param) {
-        return cmd << 24 | param << 3 | reg;
+        return cmd << 24 | param << 8 | reg;
     }
 
 };
@@ -92,7 +89,7 @@ class Core {
             case CALL:
                 pc++;
                 push(pc);
-                pc = cmd & 0xffffff;
+                pc = cmd >> 8 & 0xffff;
                 break;
             case RET:
                 pop(&pc);                
@@ -102,59 +99,59 @@ class Core {
                 pc++;
                 break;
             case MOV:
-                registers[cmd & 0x7] = cmd >> 3 & 0x1fffff;
+                registers[cmd & 0x7] = cmd >> 8 & 0xffff;
                 pc++;
                 break;
             case JMP:
-                pc = cmd & 0xffffff;
+                pc = cmd >> 8 & 0xffff;
                 break;
             case JZ:
                 if (registers[cmd & 0x7] == 0) {
-                    pc = cmd >> 3 & 0x1fffff;
+                    pc = cmd >> 8 & 0x1fffff;
                 } else {
                     pc++;
                 }
                 break;
             case JNZ:
                 if (registers[cmd & 0x7] != 0) {
-                    pc = cmd >> 3 & 0x1fffff;
+                    pc = cmd >> 8 & 0x1fffff;
                 } else {
                     pc++;
                 }
                 break;
             case ADD:
-                registers[cmd & 0x7] += cmd >> 3 & 0x1fffff;
+                registers[cmd & 0x7] += cmd >> 8 & 0xffff;
                 pc++;
                 break;
             case SUB:
-                registers[cmd & 0x7] -= cmd >> 3 & 0x1fffff;
+                registers[cmd & 0x7] -= cmd >> 8 & 0xffff;
                 pc++;
                 break;
             case MUL:
-                registers[cmd & 0x7] *= cmd >> 3 & 0x1fffff;
+                registers[cmd & 0x7] *= cmd >> 8 & 0xffff;
                 pc++;
                 break;
             case DIV:
-                if (cmd >> 3 & 0x1fffff == 0) {
+                if (cmd >> 8 & 0xffff == 0) {
                     status |= DIV_BY_ZERO;
                     return;
                 }
-                registers[cmd & 0x7] /= cmd >> 3 & 0x1fffff;
+                registers[cmd & 0x7] /= cmd >> 8 & 0xffff;
                 pc++;
                 break;
             case MOD:
-                if (cmd >> 3 & 0x1fffff == 0) {
+                if (cmd >> 8 & 0xffff == 0) {
                     status |= DIV_BY_ZERO;
                     return;
                 }
-                registers[cmd & 0x7] %= cmd >> 3 & 0x1fffff;
+                registers[cmd & 0x7] %= cmd >> 8 & 0x1fffff;
                 pc++;
                 break;
             case PRN:
                 log("%d\n", registers[cmd & 0x7]);
                 pc++;
-                break;
-            case HLT:
+                break;            
+            case END:
                 status |= PROGRAM_END;
                 log("Program halted.\n");
                 break;

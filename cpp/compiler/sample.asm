@@ -1,0 +1,13 @@
+; Sample Assembler File for Testing
+
+SETL
+CALL WAIT
+SETH
+CALL WAIT
+END
+.WAIT
+MOV R0, 100
+.LOOP
+DEC R0
+JNZ R0, LOOP
+RET
