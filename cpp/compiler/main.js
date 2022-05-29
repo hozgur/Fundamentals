@@ -7,13 +7,20 @@ let pc = 0;
 let labels =[];
 let lines = [];
 let program = [];
+
+// Split the file into lines
+// remove comments and empty lines
+/********************************************************************************************/
 allFileContents.split(/\r?\n/).forEach(line =>  {
     line = line.trim();
-    if(line.length > 2 && line[0] !== ';') {            // remove comments and empty lines
+    if(line.length > 2 && line[0] !== ';') {            
         lines.push({lineNo: pc, line: line})
     }
     pc++;
 });
+
+//extract labels with addr
+/********************************************************************************************/
 pc = 0;
 lines.forEach(lineObj => {    
     let line = lineObj.line;
@@ -24,6 +31,8 @@ lines.forEach(lineObj => {
         pc++;
 });
 
+// parse instructions
+/********************************************************************************************/
 pc = 0;
 lines.forEach(lineObj => {
     let line = lineObj.line;
@@ -53,13 +62,14 @@ lines.forEach(lineObj => {
             console.log('Exiting...');
             process.exit(1);
         }
-
+    // Validate operand count
         if(operandCount !== tokens.length - 1) {
             console.log('Invalid number of operands for command ' + cmd + ' at line ' + lineObj.lineNo);
             console.log(`line ${lineObj.lineNo} : ${lineObj.line}`);
             console.log('Exiting...');
             process.exit(1);
         }
+    // Validate operands
         if(operandCount > 0) {
             if(operandCount == 2) {
                 if(tokens[1][0] === 'R')
@@ -71,9 +81,16 @@ lines.forEach(lineObj => {
                     console.log('Exiting...');
                     process.exit(1);
                 }
+                value = parseInt(tokens[2]);
+            }
+            if(operandCount == 1) {
+                if(tokens[1][0] === 'R')
+                    register = parseInt(tokens[1].substring(1, tokens[1].length));
+                else
+                    value = parseInt(tokens[1]);
             }
             
-            // Label Address Calculation
+    // Label Address replacement.
             if(cmd == 'CALL' | cmd == 'JMP' | cmd == 'JZ' | cmd == 'JNZ') {
                 console.log(tokens);
                 let label = tokens[1];
@@ -93,6 +110,7 @@ lines.forEach(lineObj => {
                 
             }            
         }
+    // Build instruction
         program.push(opcode << 24 | value << 8 | register);
         console.log(`opcode: ${opcode} value: ${value} register: ${register}`);
         pc++;
