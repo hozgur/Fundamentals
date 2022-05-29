@@ -1,8 +1,22 @@
-const fs = require('fs');
-const allFileContents = fs.readFileSync('./sample.asm', 'utf-8');
 
+//read commandline to get input file name
+const args = process.argv.slice(2);
+if(args.length < 1) {
+    console.log("Usage: node main.js <file.asm>");
+    process.exit(1);
+}
+const inputFile = args[0];
+const outputFile = args[0].split(".")[0] + ".bin";
+
+//load commands and add opcodes sequentially
+/********************************************************************************************/
 let commands = require('./commands.json');
+for(i=0; i<commands.length; i++){
+    commands[i]["opcode"] = i;
+}
 
+// Create Variables to hold file data, labels and opcodes
+/********************************************************************************************/
 let pc = 0;
 let labels =[];
 let lines = [];
@@ -11,13 +25,20 @@ let program = [];
 // Split the file into lines
 // remove comments and empty lines
 /********************************************************************************************/
+const fs = require('fs');
+const allFileContents = fs.readFileSync(inputFile, 'utf-8');
 allFileContents.split(/\r?\n/).forEach(line =>  {
     line = line.trim();
     if(line.length > 2 && line[0] !== ';') {            
-        lines.push({lineNo: pc, line: line})
+        lines.push({lineNo: pc+1, line: line})
     }
     pc++;
 });
+
+// remove post comments
+/********************************************************************************************/
+for(i=0; i<lines.length; i++)
+    lines[i]["line"] = lines[i]["line"].split(';')[0].trim();
 
 //extract labels with addr
 /********************************************************************************************/
@@ -41,9 +62,7 @@ lines.forEach(lineObj => {
         tokens = line.split(' ');
     // Cleanup tokens
         tokens.forEach(function (token,index) {
-            if(token.indexOf(',') !== -1) {
-                this[index] = token.replace(',','');
-            }
+            this[index] = token.replace(',','');
         },tokens);
     // Get command
         let cmd = tokens[0].toUpperCase();
@@ -91,8 +110,7 @@ lines.forEach(lineObj => {
             }
             
     // Label Address replacement.
-            if(cmd == 'CALL' | cmd == 'JMP' | cmd == 'JZ' | cmd == 'JNZ') {
-                console.log(tokens);
+            if(cmd == 'CALL' | cmd == 'JMP' | cmd == 'JZ' | cmd == 'JNZ') {                
                 let label = tokens[1];
                 if(cmd == 'JZ' | cmd == 'JNZ') {
                     label = tokens[2];
@@ -105,22 +123,23 @@ lines.forEach(lineObj => {
                     process.exit(1);
                 }
                 value = labelObj.addr;
-            }
-            else {
-                
             }            
         }
     // Build instruction
         program.push(opcode << 24 | value << 8 | register);
         console.log(`opcode: ${opcode} value: ${value} register: ${register}`);
         pc++;
-    }
-    
+    }    
 });
 
 console.log(`${pc} instructions`);
 console.log(`${labels.length} labels`);
-console.log(`${lines.length} lines`);
-program.forEach(function (instruction) {
-    console.log(`${instruction.toString(16)}`);
+labels.forEach(labelObj => {
+    console.log(`${labelObj.label} : ${labelObj.addr}`);
 });
+console.log(`${lines.length} lines`);
+lines.forEach(lineObj => {
+    console.log(`${lineObj.lineNo} : ${lineObj.line}`);
+});
+
+fs.writeFileSync(outputFile, Int32Array.from(program), 'binary');
