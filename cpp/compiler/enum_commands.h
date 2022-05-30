@@ -1,0 +1,2 @@
+//It's an automatic generated header file by compiler
+enum commands { END, SETL, SETH, SETI, SETO, RET, NOP, GET, CALL, INC, DEC, JMP, PUSH, POP, PRN, TIME, MOV, JZ, JNZ, JPOS, ADD, SUB, MUL, DIV, MOD, AND, OR, XOR, SHL, SHR };

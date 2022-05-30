@@ -1,0 +1,22 @@
+0: SETI    
+1: CALL 7  
+2: CALL 10  
+3: JNZ R0 2
+4: MOV R0 200
+5: PRN R0  
+6: END    
+7: GET R1  
+8: JNZ R1 7
+9: RET    
+10: MOV R0 3
+11: GET R1  
+12: DEC R0  
+13: PRN R0  
+14: JZ R0 19
+15: JZ R1 11
+16: MOV R3 200
+17: PRN R3  
+18: RET    
+19: MOV R3 100
+20: PRN R3  
+21: RET    
