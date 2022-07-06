@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.12)
+
+set(PROJECT_NAME test1)
+
+project("${PROJECT_NAME}")
+
+include_directories("../aux_folder")
+
+add_executable(${PROJECT_NAME} main.c ../aux_folder/aux_src.cpp
+)
+
+

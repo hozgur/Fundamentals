@@ -1,9 +1,0 @@
-0: TIME R0  
-1: ADD R0 100
-2: MOV R2 R0
-3: TIME R1  
-4: SUB R2 R1
-5: GET R3  
-6: PRN R3  
-7: JPOS R2 LOOP
-8: END    

@@ -11,10 +11,11 @@ logo.addEventListener('load', function() {
     //ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(logo, 0, 0);
     pixels = createPixelData(logo);
+    console.log(pixels.length);
     // Render the pixels on every frame
     render();
 }, false);
-logo.src = 'ait-logo.png';
+logo.src = 'ait-logo2.png';
 
 
 
@@ -49,8 +50,8 @@ class pixel {
             let angle = Math.atan2(-dy, -dx);
             let speed = Math.sqrt(dx * dx + dy * dy)/this.speedDiv;
             this.velocity2 = [Math.cos(angle) * speed, Math.sin(angle) * speed];
-            this.rgbDiff = [this.init_clr[0] - this.clr[0], this.init_clr[1] - this.clr[1], this.init_clr[2] - this.clr[2]];
-            this.rgbDiff = [this.rgbDiff[0]/this.speedDiv, this.rgbDiff[1]/this.speedDiv, this.rgbDiff[2]/this.speedDiv];
+            this.rgbDiff = [this.init_clr[0] - this.clr[0], this.init_clr[1] - this.clr[1], this.init_clr[2] - this.clr[2], this.init_clr[3] - this.clr[3]];
+            this.rgbDiff = [this.rgbDiff[0]/this.speedDiv, this.rgbDiff[1]/this.speedDiv, this.rgbDiff[2]/this.speedDiv, this.rgbDiff[3]/this.speedDiv];
         }
         
         let dx = this.init_coord[0] - this.coord[0];
@@ -62,6 +63,7 @@ class pixel {
             this.init_clr[0] -= this.rgbDiff[0];
             this.init_clr[1] -= this.rgbDiff[1];
             this.init_clr[2] -= this.rgbDiff[2];
+            this.init_clr[3] -= this.rgbDiff[3];
         }
         else {
             //this.init_coord[0] = this.coord[0] + Math.random() * .5;
@@ -70,8 +72,8 @@ class pixel {
     }
 
     move3() {
-        this.init_coord[0] += this.velocity2[0];
-        this.init_coord[1] += this.velocity2[1];
+        this.init_coord[0] += this.velocity[0];
+        this.init_coord[1] += this.velocity[1];
     }
 
     get x() {
@@ -82,7 +84,7 @@ class pixel {
     }
     get color() {
         const c = this.init_clr;
-        return `rgb(${c[0]},${c[1]},${c[2]})`;
+        return `rgb(${c[0]},${c[1]},${c[2]},${c[3]/255})`;
     }
 }
 
@@ -95,7 +97,7 @@ function createPixelData(img) {
     let pixels = [];
     for (let i = 0; i < data.length; i += 4) {
         if (data[i + 3] > 0) {
-            let c = [data[i], data[i + 1], data[i + 2]];
+            let c = [data[i], data[i + 1], data[i + 2], data[i + 3]];
             pixels.push(new pixel([i / 4 % w, Math.floor(i / 4 / w)],c,{w,h}));
         }
     }
@@ -116,6 +118,7 @@ function render() {
                 pixels[i].move3();
         }                 
         ctx.fillStyle = pixels[i].color;
+        //ctx.fillStyle = "#FFF";
         ctx.fillRect(pixels[i].x, pixels[i].y, 1, 1);        
     }
     frames++;
