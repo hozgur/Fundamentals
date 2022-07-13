@@ -1,0 +1,10 @@
+.dragable {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    color: rgb(86, 21, 229);
+    font-size: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: move;
+}
