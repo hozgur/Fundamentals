@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="range" name="range1" id="r">
+    <input type="text" name="text1" id="t">
+    <input type="datetime" name="dt" id="dt">
+    <input type="button" value="press me" id="b">
+    <script>
+        r.oninput = function(){
+            t.value = r.value;
+        }
+    </script>
+    <script src="index.js"></script>
+</body>
+</html>
