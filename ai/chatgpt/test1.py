@@ -10,7 +10,8 @@ history = []
 
 make_shorter = " make your response shorter no description only answer."
 make_shorter_tr = " cevabınızı kısaltın açıklama yok sadece cevap."
-def get_code(text):
+
+def get_code3(text):
     pattern1 = r'```(?:python)?\n(.*?)```'
     pattern2 = r'```(?:python)?(.*?)```'
 
@@ -31,6 +32,12 @@ def get_code2(text):
         return ""
     return reply
 
+def get_code(text):
+    code = get_code3(text)
+    if not code:
+        code = get_code2(text)
+        code = get_code3(code)
+    return code
 
 # function that counts characters in history array
 def count():
@@ -39,41 +46,64 @@ def count():
         count += len(i["content"])
     return count
 
+def ask(question):
+    global history
+    if len(question) > 0:
+        history.append({"role":"user","content":question})
+    response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=history)
+    reply = response["choices"][0].message.content
+    history.append({"role":"assistant","content":reply})
+    return reply
+
+def getInput():
+    global prefix
+    global prefix_tr
+    global history
+    global postfix
+    postfix = ""
+    user_input = input(f"You[{count()}]: ")
+    if(user_input.startswith("1")):
+        user_input = "counts to ten."
+        
+    elif(user_input.startswith("2")):
+        history = []
+        print("History cleared.")
+        return ""
+    elif(user_input.startswith(">")):
+        prefix = "write a python program that "
+        prefix_tr = "bana bir python programı yaz şu şekilde:"
+        postfix = make_shorter
+        user_input = user_input[1:]
+
+    if user_input == "exit":
+        exit()
+    return user_input
+
 
 def chat():
     global history
+    global prefix
+    global prefix_tr
+    global postfix
     user_input = ""
     loop = False
-    prefix = ""
+    
     prefix_tr = ""
     while True:
+        prefix = ""
+        postfix = ""
         if not loop:
-            user_input = input(f"You[{count()}]: ")
-            if(user_input.startswith("1")):
-                user_input = "counts to ten."
-                
-            elif(user_input.startswith("2")):
-                history = []
-                print("History cleared.")
+            user_input = getInput()
+            if user_input == "":
                 continue
-            elif(user_input.startswith(">")):
-                prefix = "write a python program that "
-                prefix_tr = "bana bir python programı yaz şu şekilde:"
-
-        history.append({"role":"user","content":prefix + user_input + make_shorter})
-        if user_input == "exit":
-            break
+            reply = ask(prefix + user_input + postfix)
+        else:
+            reply = ask("")
         user_input = ""
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=history)
-        reply = response["choices"][0].message.content
-        history.append({"role":"assistant","content":reply})
         print(f"Assistant[{count()}]: ", reply)
         code = get_code(reply)
-        if not code:
-            code = get_code2(reply)
-            code = get_code(code)
         loop = False
         if code:
             try:
@@ -81,18 +111,9 @@ def chat():
                 exec(code)
             except Exception as e:
                 print(e)
-                history.append({"role":"user","content":str(e)})
-                response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=history)
-                reply = response["choices"][0].message.content
-                history.append({"role":"assistant","content":reply})
+                reply = ask(str(e))
                 print("Assistant: ", reply)
                 loop = True
                 
-
-
-
-        
 
 chat() 
