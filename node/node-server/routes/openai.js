@@ -18,7 +18,8 @@ async function sendRequest(options) {
       responseType: "json",
       headers: {
         Authorization:
-          "Bearer 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",
+          "Bearer api code here
+          ",
         "Content-Type": "application/json",
       },
       data: {
