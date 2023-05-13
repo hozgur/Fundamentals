@@ -1,4 +1,5 @@
 data
+*.pth
 .DS_Store
 .env
 *.ilk
